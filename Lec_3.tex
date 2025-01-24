@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 3}
+\date{January 16, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section*{Recap}
+
+We defined a map \mm{\theta_L: \mc{D}_L^1(G)\to T_e(G)} given by just \mm{\theta(X) = X_e} which was shown to be 
+a linear isomorphism, and this induced a lie-algebra structure on \mm{T_e(G)} given by $$[v,w] := \theta_L([\theta^{-1}_L(v),\theta^{-1}_L(w)])$$
+And this will be called the lie algebra of the group \mm{G} and will be denoted as \mm{\text{Lie}(G)}. We can also define an anlalogous map \mm{\theta_R: \mc{D}_R^1(G)\to T_e(G)} given by \mm{\theta_R(X) = X_e} and this will also be a linear isomorphism. And 
+we get a different lie algebra structure on \mm{T_e(G)}.
+
+\begin{exercise*}
+    Describe the relation between the two lie algebra structures on \mm{T_e(G)}.
+\end{exercise*}
+\begin{proof}
+    Define the dual group \mm{G^*} with the same manifold structure but $a*b:=b\cdot a$. It is elemntary to verify that this relation 
+    satisfies group axioms. Now define the map \mm{\phi: G\to G^*} by \mm{\phi(a) = a^{-1}}. This is a group isomorphism. Now note that
+    the proposition 4 proven below shows that \mm{d\phi_e} is a homomorphism of lie algebras. But since \mm{\phi} is an involution,
+    \mm{d\phi_e} is an isomorphism. Hence the two lie algebra structures are isomorphic.\\
+    Now observe that If a vector field is left invariant in $G^*$, then it must be right invariant in \mm{G} since left multiplication in \mm{G^*} is 
+    right multiplication in \mm{G}. Also, the lie bracket comes only from the smooth structure. Thus are the same for both \mm{G,G^*}. Hence we have the desired result.
+    In fact, the derivative of the inverse map is an isomorphism. 
+\end{proof}
+
+Typically the Lie group is denoted in capital letter and the lie algebra is denoted in the corresponding 
+german gothic letters(\mm{\mathfrak{g}}).
+
+\section{Homomorphisms}
+
+\begin{definition}
+    Let \mm{\mathfrak{g},\mathfrak{h}} be two lie algebras. A linear map \mm{T: \mathfrak{g}\to \mathfrak{h}} is called a \vocab{lie algebra homomorphism} if
+    \begin{enumerate}
+        \item \mm{\phi} is linear.
+        \item \mm{T([X,Y]) = [T(X),T(Y)]} for all \mm{X,Y\in \mathfrak{g}} 
+    \end{enumerate}
+    Such a homomorphism is called an \vocab{isomorphism} if \mm{T} is bijective, and if there is an isomorphism between \mm{\mathfrak{g}} and \mm{\mathfrak{h}} then
+    they are said to be isomorphic. Written as \mm{\mathfrak{g}\cong \mathfrak{h}}
+\end{definition}
+
+\begin{definition}
+    Let \mm{G} and \mm{H} be two lie groups and a map \mm{\phi: G\to H} is called a \vocab{lie group homomorphism} if
+    \begin{enumerate}
+        \item \mm{\phi} is a group homomorphism.
+        \item \mm{\phi} is smooth.
+    \end{enumerate}
+    Such a homomorphism is called an \vocab{isomorphism} if \mm{\phi} is a diffeomorphism, and if there is an isomorphism between \mm{G} and \mm{H} then they are said to be isomorphic.
+    Written as \mm{G\cong H}
+\end{definition}
+
+\begin{proposition}
+    Let \mm{G} and \mm{H} be two lie groups and \mm{\phi: G\to H} be a lie group homomorphism. Let \mm{X\in \mc{D}_L^1(G)} be such that \mm{X_e = v}. Then \mm{d\phi_e(v)\in T_e(H)}
+    And let \mm{Y} be the corresponding left invariant vector field on \mm{H}. Then \mm{X\sim_{\phi} Y}
+\end{proposition}
+\begin{proof}
+    Let \mm{f\in C^{\infty}(H)}. We need to show that, \mm{X(f\circ\phi)(a)= Y(f)(\phi(a))}. But we have
+    \begin{eqnarray*}
+        X(f\circ\phi)(a) &=& (d\phi)_a(X_a)(f)\\
+        &=& (d\phi)_a\circ(dl_a)_e(v)(f)\\
+        &=& d(\phi\circ l_a)_e(v)(f)\\
+        &=& d(l_{\phi(a)}\circ \phi)_e(v)(f)\\
+        &=& (dl_{\phi(a)})_e(d\phi_e(v))(f)\\
+        &=& Y_{\phi(a)}(f)\\
+        &=& Y(f)(\phi(a))
+    \end{eqnarray*}
+    As was desired.
+\end{proof}
+
+Let \mm{\mathfrak{g}=Lie(G)} and \mm{\mathfrak{h}= Lie(H)} be the lie algebras of \mm{G} and \mm{H} respectively. Suppose \mm{\phi: G\to H} is a lie group homomorphism and
+\mm{u,v\in \mathfrak{g}} also let \mm{X^u,X^v\in\mc{D}_L^1(G)} be such that \mm{X^u_e = u} and \mm{X^v_e = v}. Then \mm{d\phi_e(u),d\phi_e(v)\in \mathfrak{h}}. Let \mm{Y^{d\phi_eu},Y^{d\phi_ev}\in \mc{D}_L^1(H)}
+be the corresponding left invariant vectorfields on \mm{H}. Then \mm{X^u\sim_{\phi} Y^{d\phi_eu}} and \mm{X^{d\phi_ev}\sim_{\phi} Y^v} by the above proposition. And hence by the proposition 7 of lecture 2 we have 
+\mm{[X^u,X^v]\sim_{\phi} [Y^{d\phi_eu},Y^{d\phi_ev}]}. And hence we have \mm{d\phi_e([u,v]) = [d\phi_e(u),d\phi_e(v)]}. Consequently we have the following proposition.
+
+\begin{proposition}
+    Let \mm{G} and \mm{H} be two lie groups and \mm{\phi: G\to H} be a lie group homomorphism. Then \mm{d\phi_e: \mathfrak{g}\to \mathfrak{h}} is a lie algebra homomorphism.
+\end{proposition}
+
+\begin{question*}
+    Let \mm{G} be \mm{\glrg{n}} and \mm{Lie(G) = \mathfrak{g} = (\mr{n},[,])}. But \mm{\mr(n)}
+    has another lie algebra structure given by \mm{[[A,B]] = AB-BA}. But is \mm{[[A,B]] = [A,B]} ?
+\end{question*}
+
+We intend to show that the answer is yes. First we gather the following facts which will simplify the proof.
+Suppose \mm{E} is an open subset of \mm{\RR} and let \mm{(u_1,u_2,..,u_n)} be the euclidean co-ordinates on \mm{E}. 
+
+\begin{enumerate}
+    \item Any tangent vector \mm{V = \sum_{i=1}^n v_i\frac{\partial}{\partial u_i}} at a point \mm{a\in E} can be identified with the vector \mm{(v_1,v_2,..,v_n)}, which is actually an isomorphism between \mm{T_a(E)} and \mm{\RR^n}.
+    \item If \mm{f:E\to E} is a linear map restricted to \mm{E}, then the derivative map when expressed under the isomorphism above is actually \mm{f} itself.
+    \item Similarly, if \mm{f} is a linear functional restricted to \mm{E} then its derivative under the isomorphism in (1) is again itself.
+\end{enumerate}
+
+Now note that \mm{\glrg{n}} is an open subset of \mm{\mr{n}\cong \RR^{n^2}}. Denote the orresponding isomorphism between $T_e(\glrg{n})$ and $\RR^{n^2}$ by $\text{mat}$ . Also for any matrix \mm{A}, the map \mm{B\mapsto AB} is a linear map on \mm{\mr{n}}. 
+Then, if $a,b\in \text{Lie}(\glrg{n})$, and $X^a,X^b$ are the corresponding left invariant fields, $$\text{mat}([a,b])_{ij} = [a,b](u_{ij}) = [X^a,X^b]_e(u_{ij})$$
+From (1) we know that $\text{mat}[(dl_g)_e(a)] = \text{mat}(g)\text{mat}(a)$. Thus $(X^a)_g(u_{ij}) = [\text{mat}(g)\text{mat}(a)]_{ij}$ And this is a linear map on \mm{\RR^{n^2}} as a function of $\text{mat}(g)$. This allows us to apply (3). Culminating these observations,
+$$(X^a)_e(X^b(u_{ij})) = D_{\text{mat{a}}}([\text{mat}(g)\text{mat}(a)]_{ij}) = [\text{mat}(b)\text{mat}(a)]_{ij}$$
+Hence, $$[X^a,X^b]_e(u_{ij}) = [\text{mat}(a)\text{mat}(b) - \text{mat}(b)\text{mat}(a)]_{ij}$$
+Hence the $\text{mat}$ map is an isomorphism of these lie algebras as was desired.
+
+\begin{exercise*}
+    Read the proof of the same concept from Kumaresan's book.
+\end{exercise*}
+
+\section{The determinant map}
+
+\begin{question*}
+    What is the derivative of the determinant map?
+\end{question*}
+
+We give two approaches to this problem.\\
+\textbf{Approach 1}:\\
+Let \mm{X = (x_{ij})}. Then \mm{\det(X) = \sum_{i=1}^n x_{1i}c_{1i}}.Then we have \mm{\frac{\partial \det(X)}{\partial x_{ij}} = c_{1j}}. 
+Thus \mm{\det\,'(X)(H) = \sum_{1\leq i,j\leq n}c_{ij}h_{ij} = \tr(\Adj(X)H)}. 
+\\
+\textbf{Approach 2}:\\
+First we can compute the derivative at the identity by computing the directional derivative. 
+$$\det(I+tH) = 1 + t\tr (H)+o(t^2)$$
+$$\implies \det\,'(I)(H) =  \frac{d}{dt}\det(I+tH) = \tr(H)$$
+Now if $A$ is invertible, we see that $$\det(A+tH) = \det(A)\det(I+tA^{-1}H) = \det(A) + t\tr(\det(A)A^{-1}H) + o(t^2)$$
+$$\implies \det\,'(A)(H) =  \frac{d}{dt}\det(I+AH) = \tr(\det(A)A^{-1}H) = \tr(\Adj(A)H)$$
+Now note that \mm{\glrg{n}} is a dense subset of \mm{\mr{n}} and the determinant map is smooth. Hence the derivative of the determinant map is the same as the above expression for all \mm{A\in \mr{n}}.
+
+\begin{remark*}
+    Another approach to the same result is possible simply using the fact that the determinant map is a multilinear map.
+\end{remark*}
+
+\begin{exercise*}
+    Show that for any lie group \mm{m:G\times G\to G}, the multiplication map, is a sumbersion.
+\end{exercise*}
+
+\begin{proof}
+    Pick a point \mm{(a,b)\in G\times G}. Note that the tangent space at \mm{(a,b)} is isomorphic to \mm{T_a(G)\times T_b(G)}. 
+    So, it suffices to compute the action of \mm{dm_{(a,b)}} on each of these spaces individually. Now if \mm{(0,v)\in T_a(G)\times T_b(G)}, then
+    there must be a curve (say $\gamma$), fully contained in \mm{{a\times G}} such that the tangent vector to the curve at \mm{0} is \mm{(0,v)}.
+    Then the multiplication map is basically the left multiplication by \mm{a} on \mm{\gamma}. Hence the derivative is $dl_a(v)$. Applying the same argument to the other side, we get
+    $$dm_{(a,b)}(u,v) = dl_a(v) + dr_b(u)$$
+    Since $dl_a$ is itself surjective, it is clear that the total map is surjective as well.
+\end{proof}
+
+
+
+
+
+\end{document}

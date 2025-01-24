@@ -1,0 +1,220 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 1}
+\date{January 7, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section*{Logistics}
+
+\begin{itemize}
+    \item Grading policy will be as follows. $40\%$-Final exam, $35\%$ - Presentations and quizzes, $25\%$ - Scribing. No midterms!
+    \item We will follow several books as listed below,
+    \begin{enumerate}
+        \item \textit{Kumaresan, A Course in differential geometry and lie groups.}(Ideal for beginners)
+        \item \textit{Sigurõur Helgarson, Differential geometry, Lie groups and Symmetric spaces.}(A bit advanced)
+        \item \textit{Claude Chevalley, Theory of Lie groups.}(A classic)
+    \end{enumerate} 
+\end{itemize}
+
+\section{Preliminaries}
+
+A course on differential geometry is highly recommended before this course. However, we will recall certain definitions and results from differential geometry 
+in this section. 
+
+\begin{definition}
+    Suppose 
+    \begin{enumerate}
+        \item A \vocab{tangent vector} is a linear map \mm{v:C^\infty (M)\to \RR} satisfying the leibnitz rule.
+        $$v(fg) = f(p)v(g)+g(p)v(f)$$
+        The collection of these is called as the tangent space at \mm{p} denoted as $T_p(M)$
+        \item Say \mm{\phi:M\to N} is a smooth map. Then we can define for each \mm{p\in M} a map $d\phi:T_p(M)\to T_{\phi(p)}(N)$
+        called its \vocab{derivative} as,
+        $$[d\phi_p(v)](f) = v(f\circ \phi)$$
+    \end{enumerate}
+\end{definition}
+
+One can check that tangent spaces are finite dimensional, and that this derivative map is a linear map and so on and so forth.
+Now we shall define certain special subsets of a manifold.
+
+\begin{definition}
+    Let \mm{M,N} be smooth manifolds and let \mm{\phi:M\to N} be a smooth map.
+    Then, \mm{\phi} is said to be an \vocab{immersion} or a \vocab{submersion} at \mm{p} when \mm{d\phi_p}
+    is injective or surjective respectively. If a map is an immersion or a submersion at all points the map is said to be 
+    an immersion or submersion respectively.
+\end{definition}
+
+\begin{definition}
+    Let \mm{N} be a manifold. A pair \mm{(i,M)} is called a \vocab{submanifold} of \mm{N} if,
+    \begin{enumerate}
+        \item \mm{M} is a (smooth)manifold.
+        \item \mm{i:M\to N} is a one-one smooth immersion.
+    \end{enumerate}
+\end{definition}
+
+Note that in the above setting, \mm{i} defines a topology on \mm{i(M)}. This we shall call as the \vocab{map topology}.
+As \mm{i} is continuous, the subspace topology is coarser than the map topoogy.
+
+\begin{definition}
+    When subspace topology is the map topology, the sub manifold is said to be embedded.
+\end{definition}
+
+\begin{exercise*}
+    If \mm{M} is compact, then any 1-1 immersion of it will give an embedded manifold.
+\end{exercise*}
+\begin{proof}
+    Is is elementary topology that a continuous injection from a compact space to a housdorff space is a homeomorphism onto the image.
+    Hence, the subspace topology is the map topology.
+\end{proof}
+
+We also have an alternate characterization of submanifolds as given by the following lemma.
+
+\begin{lemma}
+    Let \mm{(\phi,N)} be a submanifold of \mm{M}. Then this gives a unique manifold structure on \mm{\phi(N)} that makes 
+    \mm{\phi} a diffeomorphism onto its image.
+\end{lemma}
+
+Using this lemma we can give the following definition.
+
+\begin{definition}
+    Let \mm{N} be a manifold. \mm{M} is called a submanifold of \mm{N} is 
+    \begin{enumerate}
+        \item \mm{M} is a manifold and \mm{M\subseteq N}
+        \item The inclusion map is a smooth immersion.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    \mm{\RR} is an embedded manifold of \mm{\RR^2}.
+\end{example}
+\begin{example}
+    Consider \mm{\phi:\RR\to \RR^2} given by \mm{\phi(t) = \left(\frac{2t}{1+t^2},\frac{t}{\sqrt{1+t^2}}\right)}. This can be verified to be an immersion as it is injective and the derivative doesn't vanish.
+    But it is not an embedded submanifold for the follwing reason. The image of say \mm{(-1,1)} is open in the map topology by its very definition.
+    But in the subspace topology, this cannot be open, as all neighbour hoods of origin will have preimages of arbitrarily large maginitude in \mm{\RR} under \mm{\phi}.
+\end{example}
+
+%% plot the curve of \phi map defined above. using the appropriate packages
+
+We recall two theorems about submanifolds that we will be using later.
+
+\begin{theorem}
+    Say \mm{M} and \mm{N} are two manifolds, and let \mm{S\subset N} be a submanifold. Let 
+    \mm{\phi:M\to N} be a smooth map and \mm{\phi(M)\subseteq S}. Then, \mm{\tilde{\phi}:M\to S} is smooth iff it is continuous.
+\end{theorem}
+
+\begin{proof}
+    The forward direction is obvious because all smooth maps are continuous. Now assume that \mm{\tilde{\phi}} is continuous.
+    We first show the following claim. Here let \mm{n,m,s} be the dimensions of \mm{N,M,S} respectively.
+
+    \begin{claim*}
+        For any \mm{p\in S}, there is a co-ordinate neighbourhood \mm{U} of \mm{p} such that \mm{i|_U} is an embedding into \mm{N}.
+    \end{claim*}
+    \begin{proof}
+        Pick a co-ordinate neighbourhood \mm{(V,\psi)} around \mm{i(p)} and \mm{(U_1,\tau)} around \mm{p} such that \mm{i(U_1)\subseteq V}.
+        Now consider \mm{\tilde{i}:=\psi\circ i\circ \tau^{-1}}. Clearly it is smooth. The fact the \mm{i} is an immersion implies that \mm{\tilde{i}} has a derivative of full rank.
+        So, the derivative matrix must then have a \mm{s\times s} minor of full rank. Post compose \mm{\tau} by an appropriate permutation matrix, and redefine \mm{\tilde{i}}
+        if necessary, which will ensure that the minor is the first \mm{s\times s} minor. Now extend \mm{\tilde{i}} as follows, $$\tilde{i}_0(\tau_1,..,\tau_s,y_1,y_2,..,y_{n-s}) = (\tilde{i}(\tau_1,..,\tau_s),y_1,y_2,..,y_{n-s})$$
+        Clearly \mm{\tilde{i}_0} has an invertible derivative at \mm{\tau(p)}. Thus is a local diffeomorphism on suppose \mm{U}. So, its restriction to the first \mm{s} co-ordinates is an embedding.
+        Then \mm{\tau^{-1}(U)} is the desired co-ordinate neighbourhood.
+    \end{proof}
+
+    Now fix a point \mm{p\in M}. By the claim above we can find a co-ordinate neighbourhood \mm{(U,\tau)} of \mm{\tilde{\phi}(p)} such that we have an embedding \mm{\tilde{i}:U\to N}.
+    Continuity of \mm{\tilde{\phi}} mean that twe can find a co-ordinate ball \mm{(V,\psi)} around \mm{p} such that \mm{\tilde{\phi}(V)\subseteq U}. But, 
+    $$\tilde{\phi}(V)\subseteq U\implies i\circ \tilde{\phi}(V)\subseteq i(U)\implies \phi(V)\subseteq i(U)$$
+    So, on \mm{V} we have \mm{\tilde{\phi} = i^{-1}\circ \phi}. But \mm{i^{-1}} is a projection map on co-ordinates by the claim above. Thus \mm{\tilde{\phi}} is indeed a smooth map at \mm{p}.
+    As \mm{p} was arbitrary, we are done.
+\end{proof}
+
+Note also that the claim above is true for any immersion. So, all immersions are local embeddings! Also we note that if \mm{S}
+is embedded, restriction of continuous maps is always continuous. Thus restriction of any smooth map to \mm{S} will be smooth.
+
+\begin{corollary*}
+    If \mm{M} is an embedded submanifold of \mm{N} and \mm{\phi:S\to N} is a smooth map with \mm{\phi(S)\subseteq M}. Then \mm{\phi} is smooth as a map to \mm{M}.
+\end{corollary*}
+
+\begin{theorem}
+    (\textbf{Regular value theorem}) Let \mm{\phi:M\to N} be a smooth map. Let \mm{r\in \phi(M)} be a regular value.(i.e, for each \mm{p\in \phi^{-1}(r)} the map \mm{d\phi_p} is full rank)
+    Then \mm{\phi^{-1}(r)} is an embedded submanifold of \mm{M} with codimension \mm{dim(N)}.
+\end{theorem}
+\begin{proof}
+    Let \mm{p\in \phi^{-1}(r)}. In any co-ordinate cube, it is evident that the hypothses for constant rank theorem (Rudin) are satisfied.
+    thus we can find co-ordinates such that \mm{\phi} is a projection on the first \mm{dim(N)} co-ordinates. This automatically gives us slice charts for \mm{\phi^{-1}(r)}.
+\end{proof}
+
+\section{Lie groups}
+
+\begin{definition}
+    Let \mm{(G,\cdot)} be an abstract group which is also a manifold. \mm{G} is said to be a \vocab{lie group} if,
+    \begin{enumerate}
+        \item The map \mm{\cdot:G\times G\to G} is smooth.
+        \item The map \mm{()^{-1}:G\to G} is smooth.
+    \end{enumerate}
+\end{definition}
+
+\begin{exercise*}
+    The smoothness of the two maps defined above is equivalent to the smoothness of the single map $$\mu:(x,y)\mapsto xy^{-1}$$.
+\end{exercise*}
+\begin{proof}
+    First let us assume the above two maps are smooth. The note that the map \mm{\tau:G\times G\to G\times G} given by \mm{\tau(x,y) = (x,y^{-1})} as it is the product of two smooth maps.
+    Composing it with the product map shows \mm{\mu} is smooth.\\
+    Now suppose \mm{\mu} is smooth. Then, its restriction to the submanifold \mm{G':=\{(e,x)|x\in G\}} is smooth. Meaning the inverse map is smooth. Thus the product map which is 
+    the \mm{\tau} followed by \mm{\mu} is smooth. This completes the proof.
+\end{proof}
+
+It is easy to observe that any lie group is a topological group. Fix \mm{a\in G}. Then we shall call the smooth map
+\mm{l_a:G\to G} given by \mm{l_a(g) = a\cdot g} as the left translation and similarly \mm{r_a} defined as \mm{r_a(g) = g\cdot a} is the right translation.
+Also note that the inverse map being involutive is a diffeomorphism.
+
+\begin{example}
+    We give a list of them!
+    \begin{enumerate}
+        \item \mm{(\RR^n,+)}
+        \item \mm{(\CC^n,+)}
+        \item \mm{(\RR^*,\times)}
+        \item \mm{(\CC^*,\times)}
+        \item \mm{(\mathbb{S}^1,\times)}
+        \item \mm{(M_{n\times n}(\RR),+)}
+        \item \mm{(M_{n\times n}(\CC),+)}
+        \item Any finite dimensional real vector space is a lie group.
+        \item Any abstract group is a zero dimansional lie group with discrete topology.
+        \item \mm{GL_n(\RR)} is a lie group. It is a manifold because it is an open subset of \mm{M_{n\times n}(\RR)} and the group operations are smooth
+    \end{enumerate}
+\end{example}
+
+\section{$SL_{n\times n}(\RR)$}
+    $SL_{n\times n}(\RR)$ is the group of real matrices of determinant 1. We will now show that it is a lie group.
+    But first the following exercise.
+    \begin{exercise*}
+        Show that the derivative of the determinant map is, $$[\det\,'(A)](H) = \tr(\Adj(A)(H))$$
+    \end{exercise*}
+    Using this formula, note that if \mm{\det(A)} is 1, then $$\det\,'(A)(A) = \det(A) tr(A^{-1}A) =n \neq 0$$
+    Hence the determinant map is a submersion at all points of \mm{SL_{n\times n}(\RR)}. This makes it an embedded submanifold of \mm{GL_{n\times n}(\RR)}.
+    Nowe need to check that the \mm{\mu} map is smooth.
+
+    \begin{center}
+        \begin{tikzcd}
+            \slrg{n}\times \slrg{n} \arrow[r,"i\times i"];\arrow[d,"\mu"] & \glrg{n}\times \glrg{n}\arrow[d,"\tilde{\mu}"]\\
+           \slrg{n} \arrow[r,"i"] & \glrg{n}
+            
+        \end{tikzcd}
+    \end{center}
+    
+    The map \mm{i} is an embedding and hence the map \mm{i\times i} is an embedding. The map \mm{\tilde{\mu}} is smooth(As it is essentially rational in co-ordinates).
+    Thus the map \mm{\tilde{\mu}\circ (i\times i)} is smooth. And as determinant is multiplicative, we see that the image of it lies inside the image of \mm{i}.
+    Thus by the theorem 9's corollary, the map \mm{\mu} is smooth. This completes the proof.
+    
+    \begin{exercise*}
+        Show that \mm{O_{n\times n}} and \mm{U_{n\times n}} are lie groups.
+    \end{exercise*}
+    
+\end{document}

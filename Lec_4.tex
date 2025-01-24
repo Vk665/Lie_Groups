@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 4}
+\date{January 21, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\begin{question*}
+    Do all topological groups admit a lie group structure?
+\end{question*}
+
+This is a very deep question. It was one of Hilbert's problems for the turn of the century. 
+There is a book by \textit{Montgomery and Zippin} which deals with this question.
+
+\section{Recap of ODEs}
+
+Consider the IVP 
+$$y'(t)=g(t,y(t))\text{ and }y(t_0)=p$$
+Where \mm{g:\Omega\to \mathbb{R}^n} where \mm{\Omega} is an open subset of \mm{\mathbb{R}\times \mathbb{R}^n} and \mm{(t_0,p)\in \Omega}. 
+Then we have the following fundamental result.
+
+\begin{theorem}
+    If \mm{g} is continuous and lipschitz in the second variable, then the IVP has a unique local solution.
+\end{theorem}
+
+One also has examples like $g(t,y) = 3y^{2/3}$ which have infinitely many solutions. Another natural question of importance is that of the dependence 
+of the value of the solution on slight perturbations of the initial value. We gather all the necessary results into one fundamental theorem.
+
+\begin{theorem}
+    Let \mm{I\subseteq \mathbb{R}} be open and \mm{V\subseteq\mathbb{R}^n} be open and let \mm{t_0\in I}
+    and \mm{p\in U}. Let \mm{g: I\times V\to \mathbb{R}^n} be a \mm{C^k} map. Then there is some \mm{\epsilon>0} such that \mm{(t_0-\epsilon,t_0+\epsilon)\subseteq I} and a neighbourhood \mm{V} of \mm{p} in \mm{U} and 
+    a map \mm{F: (t_0-\epsilon,t_0+\epsilon)\times V\to U} such that,
+    \begin{enumerate}
+        \item \mm{\frac{d}{dt}F(t,x) = g(t,F(t,x))}
+        \item \mm{F(t_0,x) = x}
+    \end{enumerate}
+\end{theorem}
+
+\newpage
+
+\section{Integral curves}
+
+\begin{definition}
+    Let \mm{M} be a smooth manifold and \mm{X\in \mc{D}^{1}(M)}. A smooth curve \mm{\gamma:I\to M} is called an integral curve of \mm{X} if,
+    $$\dot{\gamma}(t) = X_{\gamma(t)}$$
+    If \mm{q\in \gamma(I)} then we say \mm{\gamma} is an integral curve through \mm{q}.
+\end{definition}
+
+\begin{exercise*}
+    Let \mm{\gamma:I\to M} be an integral curve of \mm{X}. Let \mm{t_0\in I}. Then show that,
+    \begin{itemize}
+        \item[(A)] Let \mm{J = I - t_0} and let \mm{\delta:J\to M} be defined by \mm{\eta(t) = \gamma(t+t_0)}. Then \mm{\eta} is an integral curve of \mm{X}.
+        \item[(B)] Let \mm{K = \frac{1}{s}I} and let \mm{\zeta:K\to M} be defined by \mm{\zeta(t) = \gamma(st)}. Then \mm{\zeta} is an integral curve of \mm{sX}. 
+    \end{itemize}
+\end{exercise*}
+
+Let \mm{X\in \mc{D}^{1}(M)} and let \mm{p\in M}. Let \mm{\phi = (\phi_1,\phi_2,..,\phi_n)} be a centered co-ordinate chart around \mm{p} valid in a neighbourhood \mm{U}.
+let \mm{\gamma:I\to M} be a smooth curve where \mm{I} is a neighbourhood containing \mm{t_0} such that \mm{\gamma(t_0)=p}. Since \mm{\gamma} is continuous, we can select a neighbourhood \mm{J} of \mm{t_0} such that \mm{\gamma(J)\subseteq U}. 
+On \mm{J}, we have the following.
+\begin{eqnarray*}
+    \gamma'(t) = X_{\gamma(t)} &\iff& d\phi_{\gamma(t)} \gamma'(t) = d\phi_{\gamma(t)}X_{\gamma(t)}\\
+    &\iff& (\phi\circ \gamma)'(t) = d\phi_{\gamma(t)}X_{\gamma(t)}\\
+    &\iff& (\phi\circ \gamma)'(t) = d\phi_{\phi^{-1}\circ(\phi\circ\gamma(t))}X_{\phi^{-1}\circ\phi\gamma(t)}\\
+    &\iff& \phi\circ \gamma\text{ is an integral curve of }\tilde{X}_q=d\phi_{\phi^{-1}(q)}X_{\phi^{-1}(q)}\text{ for }q\in \phi(U)
+\end{eqnarray*}
+
+So now the fundamental theorem applies and we get a smooth function $F:(-\epsilon,\epsilon)\times V\to M $ where \mm{V} is some neighbourhood of \mm{p}, satisfying the following
+$$\frac{d}{dt}F(t,q) = X_{F(t,q)}\,\forall q\in V$$
+This function is called the \textbf{local flow} of \mm{X}.
+
+\begin{proposition}
+    Let \mm{\gamma,\eta:I\to M} be integral curves of \mm{X} such that \mm{\gamma(t_0) = \eta(t_0) = p}. Then \mm{\gamma = \eta}
+\end{proposition}
+\begin{proof}
+    Let \mm{J = \{t\in I: \gamma(t) = \eta(t)\}}. Then \mm{J} is non-empty and open(by the fundamental theorem and unique local solutions) and closed by continuity.
+    But since intervals are connected, we have that \mm{J = I}. As was desired.
+\end{proof}
+
+The proposition gives us the fact that there is a maximal interval(\mm{I_p}) given by all intervals on which integral curves through \mm{p} are defined, on which the integral curves exists.
+If \mm{I_p = \mathbb{R}\forall p\in X} then we say that the vector field \mm{X} is \vocab{complete}.
+
+\begin{exercise*}
+    Show that on a compact manifold, every vector field is complete.
+\end{exercise*}
+\begin{proof}
+    Suppose we have a solution \mm{\gamma:I\to M} where $I=(a,b)$. This always exists by the discussion above. We will first show that the solution extends to \mm{b} continuously.
+    Pick a sequence of local parametrizarions \mm{\{\phi_i\}_{1\leq i\leq N}} with the following properties.
+    \begin{enumerate}
+        \item $\phi_i:B(0,1)\to M$ and they all extend smoothly to the boundary.
+        \item $\{\phi_i(B(0,1/2))\}_{1\leq i\leq N}$ is a cover of \mm{M} 
+    \end{enumerate}
+    This is possible only because of compactness. Now, pull back the vector field on the manifold on each of the co-ordinate balls and consider their sup norm.
+    This does exist finitely since the field extends to the closure of the balls. Suppose the maximum of these norms is \mm{M_0}. Now consider \mm{x\in (a,b)} such that 
+    \mm{(|b-x|<\frac{1}{4M_0})}. Suppose \mm{\gamma(x)\in \phi_k(B(0,1/2))}. Then we would have that for all $x\leq y<b$, $$\|\phi^{-1}(\gamma(x))-\phi^{-1}(\gamma(y))\|\leq \frac{1}{4M_0}M_0 \leq \frac{1}{4}$$
+    Hence $\gamma([x,b))$ is entirely contained in \mm{\phi_k(B(0,1))}. Also since we have the inequality, 
+    $$\|\phi^{-1}(\gamma(a))-\phi^{-1}(\gamma(b))\|\leq M_0|a-b|$$ 
+    we have that all sequences going to \mm{b} are cauchy, and thus by completeness, must converge to some point in \mm{M}. By continuity of the vector field, it is clear that 
+    one side derivative of this extension is the vector field itself. Thus by applying local existence theorem at \mm{\gamma(b)} we can extend the solution beyond \mm{b}.
+    Since this can be done for any \mm{b} we have that the interval of existence must be infinite to the left. The same argument can be applied at the other end.
+\end{proof}
+
+\begin{example*}
+    Look for more examples in Kumaresan's book.
+    \begin{enumerate}
+        \item On \mm{U\subseteq \mathbb{R}^n} define \mm{X = \frac{\partial}{\partial u_k}}. then the integral curves are $$\gamma_p(t) = \vec{p}+t\vec{e}_k$$
+        \item Let \mm{M=\mathbb{R^2}},\mm{Z = x\frac{\partial}{\partial x}+y\frac{\partial}{\partial y}}. Then via \mm{p=(a,b)} the curve 
+        $$\gamma_p(t) = (e^ta,e^tb)$$
+        is an integral curve of \mm{Z}. This also shows that the vector field is complete.
+        \item Let \mm{M = \mathbb{R}^2} and \mm{Z = e^{-x}\frac{\partial}{\partial x}+ y\frac{\partial}{\partial y}}. Through \mm{p=(a,b)} the integral curves turn out to be,
+        $$\gamma_t(p) = (log(t+e^a),be^t)$$
+        This shows that the vector field is not complete.
+    \end{enumerate}
+\end{example*}
+
+\section{Back to Lie groups}
+
+Let \mm{G} be a lie group and \mm{X\in \mc{D}_L^1(G)}. Let \mm{\gamma:I\to G} be an integral curve of \mm{X}. Let \mm{a\in G}. Define, \mm{\eta:I\to G} by \mm{\eta(t) = a\gamma(t)}. Then we have,
+\begin{eqnarray*}
+    \eta'(t) &=& (d\eta)_t\left( \frac{d}{dt} \right)\\
+    &=& (dl_a)_{\gamma(t)}(d\gamma)_t\left( \frac{d}{dt} \right)\\
+    &=& (dl_a)_{\gamma(t)}X_{\gamma(t)}\\
+    &=& X_{a\gamma(t)}\\
+\end{eqnarray*}
+
+Hence \mm{\eta} is an integral curve of \mm{X}. This shows that the left translation of an integral curve is also an integral curve.
+
+\begin{claim*}
+    Left invariant vector fields are complete.
+\end{claim*}
+\begin{proof}
+    In view of the discussion above, it suffices to show that integral curves through the identity are defined on all of \mm{\mathbb{R}}.
+    From the local existence theorem, assume that we have an integral curve \mm{\gamma:(-\epsilon,\epsilon)\to G} such that $\gamma(0)=e$. Pick $0<\tau<\epsilon$.
+    Then consider $\tilde{\gamma}:(\tau-\epsilon,\tau+\epsilon)\to G$ given by $\tilde{\gamma}(t) = \gamma(\tau)\gamma(t-\tau)$.  Then note that, 
+    $$\tilde{\gamma}'(\tau) = dl_{\gamma(\tau)}\gamma'(0) = \gamma'(\tau)$$
+    $\tilde{\gamma}$ will be an integral curve by the discussion above, and the argument above shows that it agrees with \mm{\gamma} at \mm{\tau}. Thus, it must extend the solution to $(-\epsilon,\tau+\epsilon)$
+    by uniqueness of integral curves. Repeating the procedure indefenitely, we can extend the solution to all of \mm{\mathbb{R}}.
+\end{proof}
+
+Also observe that this means $\gamma(t+s) = \gamma(t)\gamma(s)$. Hence \mm{\gamma} is a group homomorphism from \mm{\mathbb{R}} to \mm{G}.
+
+\end{document}

@@ -1,0 +1,179 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 2}
+\date{January 9, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section{Lie subgroups}
+
+\begin{proposition}
+    Let \mm{G} be a lie group. Let \mm{H} be an abstract subgroup of \mm{G}, such that 
+    \begin{enumerate}
+        \item \mm{H} is a submanifold of \mm{G}
+        \item \mm{H} is a topological group.
+    \end{enumerate}
+    Then \mm{H} is a liegroup.
+\end{proposition}
+
+\begin{proof}
+    It suffices to show that the \mm{\mu} map given by \mm{(x,y)\mapsto x\cdot y^{-1}} is smooth.
+    The fact that \mm{H} is a topological group implies that this map is continuous.
+    Theorem 9 of the previous lecture implies that the map is smooth.
+\end{proof}
+
+\begin{definition}
+    An abstract subgroup satisfying the proberites of the proposition is called a \vocab{Lie subgroup} of \mm{G}.
+\end{definition}
+
+\begin{proposition}
+    If \mm{G_1,G_2} are two lie groups, then the product \mm{G_1 \times G_2} is a lie group under the product manifold structure.
+\end{proposition}
+
+\begin{proof}
+    exercise.
+\end{proof}
+
+We will now show that \mm{\org{n}} is a lie group. First we will show that it is an embedded manifold in \mm{\glrg{n}}. 
+Consider the map \mm{f(A) = AA^T}. Then, $$f'(A)(H) = AH^T+HA^T$$
+Observe that \mm{\Im(f')\subseteq S(n)}, the vector space of all symmetric matrices. Conversely, if \mm{M\in S(n)} we have,
+$$f'(A)(\frac{SA}{2}) = A\frac{A^TS}{2} + \frac{SA}{2}A^T = S$$
+
+This tells us that we shouls consider \mm{f} as a map from \mm{\glrg{n}} to \mm{S(n)}. Then \mm{I} is a regular value of \mm{f}, meaning 
+that \mm{f^{-1}(I)} is an embedded submanifold of \mm{\glrg{n}}. It is clearly a topological group, as the \mm{\mu} map is simply obtained by retriction
+from \mm{\glrg{n}} and thus proposition 1 applies.
+
+\section{Lie algebras}
+
+\begin{definition}
+    Let \mm{V} be a vector space over a field \mm{\mathbb{K}}. \mm{V} is said to be a \vocab{lie algebra}
+    if it has a bilinear map satisfying,
+    \begin{enumerate}
+        \item \mm{[X,X] = 0}
+        \item \mm{[X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0}
+    \end{enumerate}
+    For all \mm{X,Y,Z \in V}.
+\end{definition}
+
+\begin{remark*}
+    If \mm{\charf{\mathbb{K}} \neq 2}, then the first condition is equivalent to \mm{[X,Y] = -[Y,X]}.
+\end{remark*}
+
+In this course, \mm{\mathbb{K}} will always be \mm{\mathbb{R}} or \mm{\mathbb{C}}.
+
+\begin{example}
+    We give a list of them.
+    \begin{enumerate}
+        \item Any vector space with the bracket \mm{[X,Y] = 0} is a lie algebra.
+        \item \mm{(\mathbb{R^3},\times)} is a lie algebra.
+        \item \mm{(\mr{n},[A,B] = AB - BA)} is a lie algebra. 
+        \item The same can be done for any associative algebra over \mm{\mathbb{K}}.
+        \item \mm{sl_n(\mathbb{K}) = \{A \in \mr{n} : \tr(A) = 0\}} is a lie sub-algebra.
+        \item \mm{so_n(\mathbb{R}) = \{A \in \mr{n} : A^T = -A\}} is a lie sub-algebra.
+        \item For any smooth manifold, \mm{\mc{D}^1(M)} is a lie algebra under the bracket \mm{[X,Y] = XY - YX}.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    Let \mm{\phi:M\to N} be a smooth map between manifolds. Let \mm{X \in \mc{D}^1(M)} and \mm{Y \in \mc{D}^1(N)}.
+    We say \mm{X,Y} are \vocab{\mm{\phi}-related} and write \mm{X\sim_\phi Y} or \mm{d\phi(X) = Y} if for all smooth functions \mm{f} on \mm{N}, we have \mm{X(f\circ \phi) = Y(f)\circ \phi}.
+    Or equivalently, at each point \mm{p\in M}, we have \mm{d\phi_p(X_p) = Y_{\phi(p)}}.
+\end{definition}
+
+\begin{proposition}
+    Let \mm{\phi:M\to N} be a smooth map.  
+    \begin{enumerate}
+        \item[(a)] Let \mm{X_1,X_2} be two vector fields on \mm{M} and \mm{Y_1,Y_2} be two vector fields on \mm{N}. If \mm{d\phi(X_1)=Y_1} and \mm{d\phi(X_2) = Y_2} then,
+        \begin{enumerate} 
+            \item[(1)]\mm{d\phi([X_1,X_2]) = [Y_1,Y_2]}
+            \item[(2)]\mm{d\phi(X_1+X_2) = Y_1 + Y_2}
+        \end{enumerate}
+        \item[(b)] Let \mm{X\in \mc{D}^1(M)}, \mm{Y\in \mc{D}^1(N)} and \mm{d\phi(X)= Y}. Then, \mm{d\phi(aX) = aY} for all \mm{a \in \mathbb{R}}.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{eqnarray*}
+        [X_1,X_2](f\circ \phi) &=& X_1(X_2(f\circ \phi)) - X_2(X_1(f\circ \phi))\\
+        &=& X_1(Y_2(f)\circ \phi) - X_2(Y_1(f)\circ \phi)\\
+        &=& Y_1(Y_2(f))\circ \phi - Y_2(Y_1(f))\circ \phi\\
+        &=& [Y_1,Y_2](f)\circ \phi 
+    \end{eqnarray*}
+    As desired. The others follow from linearity of derivatives.
+\end{proof}
+
+\begin{definition}
+    Let \mm{G} be a lie group. We say that \mm{X \in \mc{D}^1(G)} is left invariant if for all \mm{g \in G}, we have \mm{dl_g(X) = X}.
+    Similarly, it is right invariant if \mm{dr_g(X) = X}.
+\end{definition}
+
+\begin{exercise*}
+    Let \mm{G} be \mm{\mathbb{R}^n}. Let \mm{X \in \mc{D}^1(G)}. Let \mm{\{u_1,..,u_n\}} be co-ordinate functions.
+    Let \mm{X(p) = \sum_{i=1}^n a_i(p) \frac{\partial}{\partial u_i}}. Show that \mm{X} is left invariant if and only if \mm{a_i} are constants.
+\end{exercise*}
+
+\begin{remark*}
+    In the abelian case, left and right invariant vector fields are the same, and we shall simply call them invariant vector fields.
+\end{remark*}
+
+We will use the notation \mm{\mc{D}^1_{L}(G),\mc{D}^1_{R}(G)} for the set of left and right invariant vector fields respectively.
+
+\begin{proposition}
+    Let \mm{G} be a lie group. Then, \mm{\mc{D}^1_L(G)} and \mm{\mc{D}^1_R(G)} are lie sub-algebras of \mm{\mc{D}^1(G)}.
+\end{proposition}
+\begin{proof}
+    The last proposition makes this trivial. Suppose \mm{X,Y \in \mc{D}^1_L(G)}. Then,
+    \begin{eqnarray*}
+        dl_g(X+Y) &=& dl_g(X)+dl_g(Y) = X+Y\\
+        dl_g(aX) &=& adl_g(X) = aX\\
+        dl_g([X,Y]) &=& [dl_g(X),dl_g(Y)] = [X,Y]
+    \end{eqnarray*}
+    Same proof for the right invariant case.
+\end{proof}
+
+Observe that if \mm{X \in \mc{D}^1_L(G)}, then \mm{X(a) = (dl_a)_e(X(e))}
+And thus \mm{X} is completely determined by the value at identity. This leads us to 
+th following map, \mm{\theta_L : \mc{D}^1_L(G) \to T_eG} given by \mm{X \mapsto X(e)}
+It is easy to see that this map is linear and injective. And we prove the following natural claim.
+
+\begin{claim*}
+    \mm{\theta_L} is onto.
+\end{claim*}
+\begin{proof}
+    Let \mm{v \in T_eG}. Define \mm{(X^v)_g = (dl_g)_e(v)}. We need to check it is smooth. It is equivalent to showing,
+    for any smooth \mm{f}, \mm{a\mapsto (X^v)_a(f)} is smooth. This follows from the observation that, if \mm{v} corresponds to 
+    differentiation along the smooth curve \mm{\gamma(t)}, then \mm{(X^v)_a(f) = [(dl_a)_e(v)](f) = v(f\circ l_a) = \frac{d}{dt}|_{t=0}f(a\gamma(t))}.
+    Consider the maps,
+    $$G\times (-\epsilon,\epsilon)\to G\times G \to G \to \mathbb{R}$$
+    $$(a,\epsilon) \mapsto (a,\gamma(t)) \mapsto a\cdot \gamma(t) \mapsto f(a\cdot \gamma(t))$$
+    The smoothness of the composite map is evident. Now consider a product co-ordinate neighbourhood of \mm{(a,0)} in 
+    \mm{G\times (-\epsilon,\epsilon)}. As the map is smooth, its derivative with respect to \mm{t} is also smooth. In particular, smooth in \mm{a}.
+    Now we check that it is left invariant.
+    $$(dl_a)_g(X^v)_g = (dl_a)_g\circ (dl_g)_e(v) = (dl_a\circ dl_g)_e(v) = (dl_{ag})(v) = (X^v)_{ag}$$
+    as desired.
+\end{proof}
+
+Since we have shown that \mm{\theta_L} is an isomorphism, and that \mm{\mc{D}^1_L(G)} is a lie algebra, we have 
+a natural lie algebra structure on \mm{T_eG}.
+
+\begin{definition}
+    Given a lie group \mm{G}, we define the \vocab{lie algebra of \mm{G}} is \mm{T_e(G)} with the lie algebra structure derived above.
+\end{definition}
+
+\begin{exercise}
+    Show that the lie algebra of \mm{\glrg{n}} is isomporphic to \mm{\mr{n}}.
+\end{exercise}
+
+
+
+\end{document}
