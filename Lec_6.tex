@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 6}
+\date{February 6, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section*{Canonical co-ordinate neighbourhoods}
+
+We have shown in propositon 4 of the previous lecture that $exp$ map is a local diffeomorphism from the lie algebra to the lie group.
+Suppose $G$ is the lie group and $\ff{g}$ its lie algebra(as always!) and let $U_0,V_e$ be neighbourhoods of $0\in \ff{g},e\in G$ respectively such that $exp|_{U_0}:U_0\to V_e$ is a diffeomorphism.
+Then it is clear that the inverse map $\xi:V_e\to U_0$ given by $exp(\vec{x})\mapsto \vec{x}$ is a co-ordinate system on $V_e$. Such co-ordinate systems are called canonical co-ordinate systems.
+
+\section*{Matrix exponentials}
+
+Suppose $G = \glcg{n}$ and $\ff{g} = \mc{n}$. It has been shown in the presentations that the map given by the power series
+
+$$\theta(A) = \sum_{k\geq 0}\frac{A^k}{k!}$$
+
+is smooth and satisfies $exp(X) = \theta(X)$. We will see a different approach to some of the results.
+
+\begin{proposition}
+    The map $\theta$ has the following properties.
+    \begin{enumerate}
+        \item $\theta$ is continuous.
+        \item $AB=BA\implies \theta(A+B) = \theta(A)\theta(B)$.
+        \item $\theta((s+t)A) = \theta(sA)\theta(tA)$
+        \item $\theta(-A) = \theta(A)^{-1}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Note that $A\mapsto A^k/k!$ is continuous with $\|A^k/k!\|\leq \|A\|^k/k!$. Thus $$\|\theta(A)\|\leq \sum_{k\geq 0}\frac{\|A\|^k}{k!}\leq e^{\|A\|}$$
+    So for all $A$ such that $\|A\|\leq R$ we can use the wierstrass M-test to show that $\theta$ is continuous. As $R$ goes to infinity we see that $\theta$ is continuous everywhere.
+    Note that since the series are absolutely convergent we can use an argument identical to that of Theorem 3.50 in Rudin's Principles of Mathematical Analysis to argue that $$\theta(A)\theta(B) = \left( \sum_{k\geq 0} \frac{A^k}{k!} \right)\left( \sum_{l\geq 0} \frac{B^l}{l!} \right) = \sum_{n\geq 0}\sum_{k+l=n}\frac{A^kB^l}{k!l!}$$
+    Given that $AB=BA$. Now we can further manipulate the series using binomial theorem to arrive at the following.
+    $$\theta(A)\theta(B) = \sum_{n\geq 0}\frac{(A+B)^n}{n!} = \theta(A+B)$$
+    The 3rd property follows from the second by setting $A = sA,B = tA$. The fourth property follows from the second by setting $B = -A$.
+\end{proof}
+
+The 3rd property shows that $\alpha(t):=\theta(tH)$ is a group homomorphism from $\RR$ to $\glcg{n}$. Now we will show that it is differentiable.
+
+\begin{proposition}
+    Let $A\in M_n(\CC)$. Let $\alpha:\mathbb{C}\to \mc{n}$ given by $$\alpha(t) = e^{tA}$$
+    is once differentiable and $\alpha'(t) = \alpha(t)A$.
+\end{proposition}
+\begin{proof}
+    Observe that $$\alpha(t+s)-\alpha(t) = \theta(tA+sA)-\theta(tA) = \theta(tA)(\theta(sA)-I) = \theta(tA)\left( sA + \sum_{k\geq 2}\frac{s^kA^k}{k!} \right)$$
+    Note that $k!\geq 2^{k-1}$ for all $k\geq 2$. Thus $$\|\alpha(t+s)-\alpha(t) - s\theta(tA)A \|\leq \sum_{k\geq 2}\frac{\|sA\|^k}{k!}\leq \theta(tA)\sum_{k\geq 2}\frac{\|sA\|^k}{2^{k-1}} = \theta(tA)|s|^2\|A\|^2\frac{\|sA\|^k}{2^k}$$
+    For $s$ sufficiently small $\|sA\|$ is sufficiently small so that the series in the end is a convergent geometric series. Thus $$\frac{\|\alpha(t+s)-\alpha(t) - s\theta(A)A \|}{|s|}\leq |s|M$$
+    for some $M$ and sufficiently small $s$. Thus $\alpha$ is differentiable at $t$ and $\alpha'(t) = \alpha(t)A$.
+\end{proof}
+
+Note that this shows that $\alpha'(t) = \alpha(t)A$. But the map $X\mapsto \alpha(t)X$ is a linear map and thus its own derivative. So we have $\alpha'(t) = dl_{\alpha(t)}A$. Thus $\alpha$ is an integral curve of 
+the left invariant vector field corresponding to the tangent vector $A$ at $I$ of the lie group $\glcg{n}$. But by uniqueness of integral curves and definition of exponentials we have $\alpha(t) = \gamma_{\tilde{A}}(t) =exp{tA}$.
+(The notation $\tilde{A}$ is used to denote the left invariant vector field corresponding to $A$).
+The following is an exersice regarding a mistake in one of the presentations.
+
+\begin{exercise*}
+    Show that the set of positive definite matrices is open in the space of all Hermitian matrices.
+\end{exercise*}
+\begin{proof}
+    Let $A\in Herm_n(\CC)$ be positive definite. Set $v\in \CC^n-0$. Let $H$ be a Hermitian matrix.     
+    Since $A$ is positive definite the quantity $\langle v,Av \rangle$ has a positive minimum $C$ on the unit sphere in $\CC^n$. Thus $$\langle v,Av\rangle = \|v^2\|\langle \frac{v}{\|v\|},A\frac{v}{\|v\|}\rangle > C\|v\|^2$$
+    Also observe that $|\langle v,Hv \rangle|\leq \|v\|\|Hv\|\leq \|v\|^2\|H\|_{op}$. So for $\|H\|_{op}\leq C/2$ we have 
+    $$\langle v,(A+H)v \rangle = \langle v,Av \rangle + \langle v,Hv\rangle$$
+    $$\implies \langle v,(A+H)v \rangle \geq C\|v\|^2-\frac{C}{2}\|v\|^2>0$$
+    Since $v$ was arbitrary we have that $A+H$ is positive definite. So we have found an open ball around $A$ in the space of Hermitian matrices that is contained in the set of positive definite matrices and thus the set of positive definite matrices is open.
+\end{proof}
+
+\section*{Topological groups}
+
+We continue with the digression onto topological groups started in the previous lecture. With the notation from the previous lecture we observe the following.
+
+\begin{exercise*}
+    $G/G_0$ with quotient topology is a topological group
+\end{exercise*}
+\begin{proof}
+    Let $\mu:G\times G\to G$ be given by $\mu(x,y) = xy^{-1}$. And $\tilde{mu}:G/G_0\times G/G_0\to G/G_0$ given by $(xG_0)\cdot (yG_0)\to xy^{-1}G_0$. Then we have the following diagram.
+    \begin{center}
+        \begin{tikzcd}
+            G\times G \arrow[r,"\mu"] \arrow[d,"\pi\times \pi"'] & G \arrow[d,"\pi"]\\
+            G/G_0\times G/G_0 \arrow[r,"\tilde{\mu}"] & G/G_0
+        \end{tikzcd}
+    \end{center}
+    The maps $\mu,\pi,\pi\times \pi$ are all continuous. The diagram is commutatuive simply by definition of quotient groups.
+    We will be done once we show that $\tilde{\mu}$ is continuous. Set $p=(p_1G_0,p_2G_0)\in G/G_0\times G/G_0$ and $U$ an open neighbourhood of $\tilde{\mu}(p)$. Since $\mu':=\pi\circ\mu$ is continuous and $\mu'(p_1,p_2)=\tilde{mu}(p)$ we have $V_1,V_2$ open neighbourhoods of $p_1,p_2$ respectively such that $\mu'(V_1\times V_2)\subseteq U$.
+    Note that this means $\mu'(V_1G_0\times V_2G_0)\subseteq U$ and by definition of quotient map $\pi$, $N_1=\pi(V_1G_0)$ is open and so is $N_2=\pi(V_2G_0)$.
+    So $$\tilde{mu}(N_1\times N_2) = \tilde{mu}\circ(\pi\times\pi)(V_1\times V_2) = \mu'(V_1\times V_2)\subseteq U$$
+    And clearly $p\in N_1\times N_2$. This shows that $\tilde{mu}$ is continuous at $p$ and since $p$ was arbitrary we have that $\tilde{mu}$ is continuous.
+\end{proof}
+
+\begin{exercise*}
+    $G$ is hausdorff $\implies$ $G/G_0$ is hausdorff.
+\end{exercise*}
+\begin{proof}
+    $G_0$ is closed since it is a connected component. Hence $G-G_0$ is open. Note that $G-G_0 = \pi^{-1}(G/G_0-eG_0)$. By definition of quotient topology we get $G/G_0-eG_0$ is open.
+    This shows that the identity is closed in $G/G_0$. Since left multiplications are homeomorphisms this argument easily shows that all points are closed in $G/G_0$.
+    We show that following claim.
+    \begin{claim*}
+        In any topological group $G$ if all points are closed then $G$ is hausdorff.
+    \end{claim*}
+    \begin{proof}
+        Suppose $e\neq y\in G$. Then there must be $U$ a neighbourhood of $e$ such that $y\notin U$ since $y$ is closed. By a result in the previous lecture we have a symmetric neighbourhood $V$ of $e$ such that $V^2\subseteq U$. 
+        Note that if $z\in V\cap yV$ then we have $z = x_1y = x_2$ for some $x_1,x_2\in V$. Thus $y = x_1^{-1}x_2\in V^2\subseteq U$ which is a contradiction. Thus $V\cap yV = \emptyset$.
+        So $V$ and $yV$ are disjoint neighbourhoods of $e$ and $y$ respectively. For arbitrary $x,y\in G$ we can find disjoint neighbourhoods of $e$ and $x^{-1}y$ and then apply the homeomorphism $l_x$ to get the desired.
+    \end{proof}
+\end{proof}
+
+\begin{exercise*}
+    If $H$ is an open subgroup of a connected topological group $G$ then $G=H$.
+\end{exercise*}
+\begin{proof}
+    We have shown that open subgroups are automatically closed. Since $G$ is connected and $H$ is non-empty we have that $G=H$.
+\end{proof}
+
+Now consider the $exp$ map from $\ff{g}\to G$ for a lie group $G$. Since $\ff{g}$ is connected we have that $exp(\ff{g})\subseteq G_0$. Now consider a canonical neighbourhood $U_0$ of $0$ which is connected in $\ff{g}$. Then it is clear that $exp(U_0)$ is open in $G$ and is contained in $G_0$.
+By the definition of subspace topology we have that $exp(U_0)$ is an open neighbourhood of identity in $G_0$. Then we have that $\langle U_0\rangle$ is open in $G_0$ by the last exercise in lecture 5 and thus $G_0 = \langle exp(U_0)\rangle$ by the exercise above. As a corollary(again of the last exercise in the previous lecture)
+we have $$g\in G_0\implies\exists X_1,...,X_k\in U_0: g = exp(X_1)exp(X_2)...exp(X_k)$$
+
+We have the following proposition as a corollary of the above discussion.
+
+\begin{proposition}
+    Let $G$ be a lie group with lie algebra $\ff{g}$. Then 
+    \begin{enumerate}
+        \item $G_0$ is open in $G$.
+        \item Any $g\in G_0$ can be written as $exp(X_1)exp(X_2)...exp(X_n)$ for some $\{X_k\}\subseteq \ff{g}$.
+        \item The group $G/G_0$ has a discrete structure.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Since $G$ is a manifold it is locally connected and this means that connected components are open $\implies G_0$ is open. The second point follows from the discussion above. 
+    For the third point note that for a point $xG_0\in G/G_0$ we have $\pi^{-1}(xG_0) = xG_0 = l_x(G_0)$. Since $G_0$ is open and $l_x$ is a homeomorphism we have $\pi^{-1}(xG_0)$ is open.
+    Which means $\{xG_0\}$ is open in $G/G_0$. Thus $G/G_0$ has the discrete topology.
+\end{proof}
+
+We have seen that given any homomorphism of lie groups we get a corresponding homomorphism of lie algebras. We now show that this association is unique for connected lie groups.
+
+\begin{proposition}
+    Let $G$ be a connected lie group with lie algebra $\ff{g}$ and $H$ be a lie group with lie algebra $\ff{h}$. Let $\phi,\psi:G\to H$ be homomorphisms of lie groups. Then if 
+    $d\phi_0 = d\psi_0$ then $\phi = \psi$.
+\end{proposition}
+
+\begin{proof}
+    Since $G=G_0$ we use the previous proposition to write $g = exp(X_1)exp(X_2)...exp(X_n)$. Then 
+    \begin{eqnarray*}
+        \phi(g) &=& \phi(exp(X_1)exp(X_2)...exp(X_n))\\
+        &=& \phi(exp(X_1))\phi(exp(X_2))...\phi(exp(X_n))\\
+        &=& exp(d\phi_0(X_1))exp(d\phi_0(X_2))...exp(d\phi_0(X_n))\\
+        &=& exp(d\psi_0(X_1))exp(d\psi_0(X_2))...exp(d\psi_0(X_n))\\
+        &=& \psi(exp(X_1))\psi(exp(X_2))...\psi(exp(X_n))\\
+        &=& \psi(exp(X_1)exp(X_2)...exp(X_n))\\
+        &=& \psi(g)
+    \end{eqnarray*}
+    In steps 2,4 we have used Theorem 6 from lecture 5.
+\end{proof}
+
+
+\end{document}

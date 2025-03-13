@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 5}
+\date{January 28, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section{The exponential map}
+
+\begin{definition}
+    Let $G$ be a lie group and let $\phi:\RR\to G$ be a smooth group homomorphism. Then $\phi$ is called a \vocab{one-parameter subgroup} of $G$.
+\end{definition}
+
+Given a vector in $T_e(G)$ let $\tilde{X}\in \mathcal{D}_L^1(G)$ denote the left invariant vector field corresponding to it and $\gamma_{\tilde{X}}$ the integral curve of it such that $\gamma_{\tilde{X}}(0)=e$. Then proposition 5 of the last lecture tells us that
+$$\gamma_{\tilde{X}}(s+t) = \gamma_{\tilde{X}}(s)\cdot \gamma_{\tilde{X}}(t)$$
+Also note that if $\eta:\RR\to G$ is given by $\eta(t) = \gamma_{\tilde{X}}(st)$ then $\eta(0)=e$ and it is an integral curve of $s\tilde{X}$. By uniqueness of integral curves we have,
+$$\gamma_{\tilde{X}}(st) = \gamma_{s\tilde{X}}(t)$$
+
+\begin{definition}
+    Let $X\in \mathfrak{g}$. Then we define the \vocab{exponential} of $X$ as, $$\exp(X) = \gamma_{\tilde{X}}(1)\in G$$
+\end{definition}
+
+\begin{proposition}
+    The following properties hold for the exponential map:
+    \begin{enumerate}
+        \item $\exp(0) = e$ 
+        \item $\gamma_{\tilde{X}}(s) = \exp(sX)$
+        \item $\exp((s+t)X) = \exp(sX)\exp(tX)$
+        \item $\eta(t) = \exp(tX)$ is the integral curve of $\tilde{X}$ with $\eta(0)=e$. 
+        \item Fix $g\in G$. $\alpha(t) = g\cdot \exp(tX)$ is the integral curve of $\tilde{X}$ with $\alpha(0)=g$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    They straightforward from the observations above.
+    \begin{enumerate}
+        \item $exp(0) = \gamma_0(1) = e$ since zero vector field has constant functions as integral curves.
+        \item Note that $s\tilde{X} = \widetilde{sX}$. Thus $$\gamma_{\tilde{X}}(s) = \gamma_{s\tilde{X}}(1) = \gamma_{\widetilde{sX}}(1) = exp(sX)$$
+        \item Using the property of integral curves above, we have $$\gamma_{\tilde{X}}(st) = \gamma_{s\tilde{X}}(t)$$
+        $$\implies exp((s+t)X) = exp(sX)exp(tX)$$
+        \item It follows from property 2.
+        \item This follows from the first observation about left invariant vector fields from section 3 of lecture 4.
+    \end{enumerate}
+\end{proof}
+ 
+\begin{example*}
+    \begin{enumerate}
+        \item $(\RR^n,+)$ has trivial lie algebra. The integral curves are easily seen to be $\gamma(t) = tv$. Thus the exponential map is the identity.
+        \item $(\RR^*,\times)$ has lie algebra $\RR$. The left invariant vector field is $X^a_p = dl_p(a) = pa$. The integral curves is easily seen to be $\gamma(t) = e^{at}$. Thus $\exp(a) = e^a$.
+        \item Let $G=S^1$. clearly $\mathfrak{g} = \RR$. Show that $exp(t) = e^{it}$(Exercise).
+        \begin{proof}
+            Consider $S^1$ as being embedded in $\CC$ as the unit circle. Then the left translation of the group corresponds to rotation ofthe complex plane which is a linear map and hence its own derivative. So, say $X$ is a tangent vector to $S^1$ at $1$. Then $\tilde{X}_{e^{i\theta}} = dl_{e^{i\theta}}(X)$ which is essentially $X$ rotated by $\theta$ counterclockwise. Identify the tangent vectors with complex numbers via translation to origin. Then $\tilde{X}_{e^{i\theta}} = ie^{i\theta} = (e^{it})'(\theta)$
+            Thus $\tilde{X}_{\gamma(\theta)} = \gamma'(\theta)$ if $\gamma(t) = e^{it}$. Hence it is the integral curve by uniqueness. 
+        \end{proof}
+        \item Let $G=GL_n(\RR)$. Then $\mathfrak{g} = M_n(\RR)$. Let $X\in \mathfrak{g}$. Then $exp(X) = e^X$ where $e^X$ is the matrix exponential.(Prove this!)
+        \begin{proof}
+            Let $X\in M_n(\RR)$. Then let $\gamma(t): e^(tX) = \sum_{n=0}^{\infty} \frac{t^nX^n}{n!}$. Then we have $$\gamma'(t) = \lim_{h\to 0}\frac{e^{(t+h)X}-e^tX}{h} = \lim_{h\to 0}e^{tX}\frac{e^{hX}-1}{h} = e^{tX}X = d(L_{e^{tX}})X = \tilde{X}_{\gamma(t)}$$
+            Thus $\gamma$ is an integral curve of $\tilde{X}$ with $\gamma'(0)=X$. By uniqueness of integral curves we have $$e^X = \gamma(1) = \gamma_{\tilde{X}}(1) = exp(X)$$
+            As was desired.
+        \end{proof}
+    \end{enumerate}
+    
+\end{example*}
+
+\section{Properties of the exponential map}
+
+\begin{proposition}
+    The $exp$ map is smooth from $\mathfrak{g}$ to $G$. Further, its derivative at zero is the identity map.
+    Thus by the inverse function theorem, $exp$ is a local diffeomorphism around zero.
+\end{proposition}
+
+\begin{proof}
+    Consider $H = \mathfrak{g}\times G$. Define $V\in \mc{D}^1(H)$ as, $V_{(X,g)} = (0,\tilde{X}_g)$. Let $\eta_{(X,g)}:\RR\to H$ be given by 
+    $$\eta_{(X,g)}(t) = (X,gexp(tX))$$
+    Then $\eta_{(X,g)}$ is an integral curve of $V$ with $\eta_{(X,g)}(0) = (X,g)$. Let $F$ be the flow of this vector field as in theorem 2 of lecture 4. Consider the maps
+    $$\mathfrak{g}\to \RR\times \mathfrak{g}\times G\to \mathfrak{g}\times G\to G$$
+    $$X\mapsto (1,X,e)\mapsto F(1,X,e)\mapsto \pi_2(F(1,X,e))$$
+    Since the flow is smooth, the composition is smooth. Note that $\pi_2(F(1,X,e)) = \pi_2(\eta_{(X,e)}(1)) = \pi_2((X,exp(X))) = exp(X) $. So $exp(X)$ is smooth.
+    Now observe that $$[exp'(0)](X) = (exp(tX))'(0) = \gamma_{\tilde{X}}'(0) = X$$
+    Since $X$ was arbitrary the derivative at zero is the identity map.
+\end{proof}
+
+\begin{lemma}
+    Let $\alpha:\RR\to G$ be a one parameter subgroup. Suppose $\alpha'(0) = X$. Then $$\alpha(t) = exp(tX)$$
+\end{lemma}
+\begin{proof}
+    We have $\alpha'(t) = \frac{d}{ds}\alpha(t+s)|_{s=0} = \frac{d}{ds}\alpha(t)\alpha(s)|_{s=0} = (dl_{\alpha(t)})_e(X) = \tilde{X}_{\alpha(t)}$. This shows that $\alpha$ is an integral curve. By uniqueness of integral curves we have $\alpha(t) = \gamma_{\tilde{X}}(t) = exp(tX)$.
+\end{proof}
+
+Thus one parameter subgroups of $G$ are precisely the integral curves of left invariant vector fields. Morover they are uniquely determined by their derivative at zero.
+We will use this to show the following theorem which is very handy in manipulating the exponential map.
+
+\begin{theorem}
+    Let \mm{\phi:G\to H} be a lie group homomorphism. Then \mm{d\phi_e:\mathfrak{g}\to \mathfrak{h}} is a lie algebra homomorphism(Lecture 3 proposition 4).
+    And we have the following commutative diagram.
+    \begin{center}
+        \begin{tikzcd}
+            \mathfrak{g} \arrow[r,"exp"] \arrow[d,"d\phi_e"] & G \arrow[d,"\phi"] \\
+            \mathfrak{h} \arrow[r,"exp"] & H
+        \end{tikzcd}
+    \end{center}
+    In other words, \mm{\phi\circ exp = exp\circ d\phi_e}.
+\end{theorem}
+
+\begin{proof}
+    Let $X\in \mathfrak{g}$. Then $\gamma(t):=\phi(exp(tX))$ is a smooth map. And being a composition of group homomorphisms is a group homomorphism itself from $\RR \to H$. Thus it is a one parameter subgroup of $H$
+    with $\gamma'(0) = d\phi_e(X)$(By chain rule). By the lemma above we immediately get $$\phi(exp(tX)) = \gamma(t) = exp(t\gamma'(0)) = exp(td\phi(X))$$
+    Put $t=1$ to get the required.
+\end{proof}
+
+\section*{Topological groups}
+
+We will digressa bit to discuss certain properties of topological groups that will be usefull later.
+Suppose $G$ is a topological group. Which is a group equipped with a topology that is compatible with its group operations. 
+We will denote by $G_0$ the connected component of the identity. Observe that $G_0$ is always a closed.
+
+\begin{exercise*}
+    Show that $G_0$ is a normal subgroup of $G$.
+\end{exercise*}
+
+\begin{proof}
+    Let $g\in G_0$. Then we know that $l_g:G\to G$ defined by left multiplication is a continuous map. Thus $l_g(G_0)$ is connected. And since $e\in G_0,l_g(e)=g$ we have $G_0\ni g\in l_g(G_0)\implies l_g(G_0)\cap G_0\neq \phi$.
+    Since $G_0$ is a connected component by maximality we have $l_g(G_0)\subseteq G_0$. This shows that $G_0$ is closed under multiplication. Note that inverse is also a continuous map and $e^{-1}=e\implies G_0^{-1}\cap G_0\neq \phi$.
+    so again by maximality of connected components we get $G_0^{-1}\subseteq G_0$. Thus we have that $G_0$ is a subgroup of $G$.\\
+    Let $h\in G$. Then the map $c_h:g\mapsto hgh^{-1}$ is a continuous map as it is the composition of the continuous maps $l_h,r_{h^{-1}}$. And $c_h(e)=e\implies G_0\ni e\in c_h(G_0)$
+    Thus $c_h(G_0)\cap G_0\neq \phi$. By maximality of connected components we have $c_h(G_0)\subseteq G_0$. Thus $G_0$ is normal.
+\end{proof}
+
+\begin{exercise*}
+    Say $H$ is an open subgroup of $G$. Show that $H$ is closed.
+\end{exercise*}
+
+\begin{proof}
+    Say suppose $x\in G-H$. Then if $y\in l_x(H)\cap H$, then $y=xh$ for some $h\in H$. But then $x=yh^{-1}\in H$ which is a contrdiction. Thus $l_x(H)\cap H=\phi$(It is afterall the left coset containing $x$). 
+    But we observe that $l_x$ is a homeomorphism as it is continuous and has $l_{x^{-1}}$ as its continuous inverse. Thus $l_x(H)$ is open. So we have funished an open neighbourhood of $x\in G-H$ in $G-H\implies G-H$ is open
+    $\implies H$ is closed. 
+\end{proof}
+
+\begin{definition}
+    Let $U$ be an open neighbourhood of $e$. Then $U$ is said to be a \vocab{symmetric neighbourhood} of $e$ if $U=U^{-1}$.
+\end{definition}
+
+\begin{exercise*}
+    Show that any given neighbourhood $U$ of $e$ contains a symmetric neighbourhood $V$ of $e$ such that $V\subseteq U,V^2\subseteq U$.
+\end{exercise*}
+\begin{proof}
+    We know that $m:G\times G\to G$ given by $(x,y)\mapsto x\cdot y$ is continuous. Thus the set $m^{-1}(U)$ is open in $G\times G$. $e\in U\implies (e,e)\in m^{-1}(U)$. By definition of product topology we have that there are $V_1,V_2$ open in $G$ such that 
+    $V_1\times V_2\subseteq m^{-1}(U)$ and $(e,e)\in V_1\times V_2$. Now set $\tilde{V} = V_1\cap V_2$. Then $\tilde{V}^2 \subseteq V_1\times V_2\subseteq U$. To get a symmetric neighbourhood we set $V = \tilde{V}\cap \tilde{V}^{-1}$. As inverse operation is a 
+    homeomorphism it is clear that $V$ is open.
+\end{proof}
+
+For any given $S\subseteq G$ let $\langle S\rangle$ denote that subgroup generated by $S$. 
+
+\begin{exercise*}
+    If $U$ is open then $\langle U\rangle$ is an open subgroup of $G$. If $U$ is symmetric then $\langle U\rangle = \bigcup_{n\in \NN}U^n$.
+\end{exercise*}
+\begin{proof}
+    Suppose $x\in \langle U\rangle$. Fix $y\in U$. Then $xy^{-1}U$ is an open set contained in $\langle U\rangle$ and it is open since $g\mapsto xy^{-1}g$ is a homeomorphism of $G$.
+    Thus $\langle U\rangle$ is open. It is clear that $\bigcup_{n\in \NN}U^n\subseteq \langle U\rangle$. Note that $a\in U^m,b\in U^n\implies ab^{-1}\in U^{m+n}$ since $U$ is symmetric. 
+    Thus $\bigcup_{n\in \NN}U^n$ is a subgroup of $G$ containing $U$. Thus $\langle U\rangle \subseteq \bigcup_{n\in \NN}U^n$ as was required.
+\end{proof}
+
+
+\end{document}

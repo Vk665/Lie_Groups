@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 7}
+\date{February 18, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+We will gather certain elementary properties of left invariant fields on a Lie group $G$ which will be used later.
+Throughout let $G$ be a Lie group with Lie algebra $\mathfrak{g}$ and given $X\in T_e(G)$ we denote by $\tilde{X}$ the left invariant vector field on $G$ corresponding to $X$. 
+
+\begin{proposition}
+    Say $f\in C^{\infty}(G,\RR),g\in G,X\in T_e(G)$ we have $$(\tilde{X}f)(g) = \left( \frac{d}{dt} \right)_{t=0}f(g\exp(tX))$$
+    And 
+    $$(\tilde{X}f)(gexp(uX)) = \frac{d}{du}f(g\exp(uX))$$
+\end{proposition}
+\begin{proof}
+    Define $\gamma(t) = f(g\exp(tX))$ then observe that $\gamma = f\circ l_g\circ \exp(tX)$. And thus by chain rule we have $$d\gamma_{t=0}\left( \frac{\partial}{\partial t} \right)_{t=0} = Df_g\left( dl_g(\exp(tX)'(0)) \right) = Df_g\left( dl_g(X) \right) = Df_g\left( \tilde{X}_g \right)$$
+    Suppose $y$ is some co-ordinate on $\RR$ then we have with the co-ordinate representation of $\gamma,f$ $$\left( \frac{d}{dt} \right)_{t=0}f(g\exp(tX)) = \left( \frac{d}{dt} \right)_{t=0}(y\circ\gamma) = d\gamma_{t=0}\left( \frac{\partial}{\partial t} \right)_{t=0} (y) = Df_g(\tilde{X_g})(y) = \tilde{X}_g(y\circ f) = \tilde{X}(f\circ y)(g)$$
+    Let $y$ be the identity map and we are done.From the above it follows that $$\tilde{X}f(g\exp(uX)) = \left( \frac{d}{dt} \right)_{t=0}f(g\exp(uX)\exp(tX)) = \left( \frac{d}{dt} \right)_{t=0}f(g\exp((u+t)X)) = \frac{d}{du}f(g\exp(uX))$$
+    By the definition of derivatives.    
+\end{proof}
+
+\begin{proposition}
+    Let $\{X_k\}_{k\in \NN}\subseteq \ff{g}$. Then the following hold
+    \begin{enumerate}
+        \item $(\tilde{X}_1..\tilde{X}_kf)(g) = \left(\frac{\partial^k}{\partial t_1...\partial t_k}\right)_{t_1=..=t_k=0}f(g\exp(t_1X_1)..\exp(t_kX_k))$
+        \item $(\tilde{X}^n_1f)(g) = \left(\frac{d^n}{dt^n}\right)_{t=0}f(g\exp(tX_1))$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    We prove the first part by induction. The base case is the previous proposition. Suppose the first part holds for $k-1$ then we have 
+    \begin{align*}
+        (\tilde{X}_1..\tilde{X}_kf)(g) &= (\tilde{X}_1(\tilde{X}_2..\tilde{X}_kf))(g)\\
+        &= \left( \frac{d}{dt} \right)_{t=0}(\tilde{X}_2..\tilde{X}_kf)(g\exp(tX_1))\\
+        &= \left( \frac{d}{dt} \right)_{t=0}\left( \left( \frac{\partial^{k-1}}{\partial t_2...\partial t_k} \right)_{t_2=..=t_k=0}f(g\exp(tX_1)\exp(t_2X_2)..\exp(t_kX_k)) \right)\\
+        &= \left( \frac{\partial^k}{\partial t_1...\partial t_k} \right)_{t_1=..=t_k=0}f(g\exp(t_1X_1)..\exp(t_kX_k))
+    \end{align*}
+    For the second part we again induct on $n$. The base case is again the previous proposition. Suppose the second part holds for $n-1$ then we have
+    $$(\tilde{X}^n_1f)(g) = [\tilde{X}_1^{n-1}(\tilde{X}_1f)](g) = \left(\frac{d^n}{dt^{n-1}}\right)_{t=0}(\tilde{X}_1f)(g\exp(tX_1)) = \left(\frac{d^n}{dt^n}\right)_{t=0}f(g\exp(tX_1))$$
+\end{proof}
+
+\begin{remark*}
+    All the above propositions work for $f$ being smooth in a neighbourhood of $g$. Also one can deal with $f$ taking values in $\RR^k$ by defining $\tilde{X}f = (\tilde{X}f_1,..,\tilde{X}f_k)$ where $f = (f_1,..,f_k)$ and $\tilde{X}$ is any vector field on $G$.
+\end{remark*}
+
+Let $f\in C^{\infty}(G)$. Let $X_1,..,X_k\in \ff{g}$ and define $F:\RR^k\to \RR$ by $$F(t_1,..,t_k) = f(g\exp(t_1X_1)..\exp(t_kX_k))$$
+Note that $F(0)=f(e)$. Also for $1\leq i<j\leq k$ we have$$\frac{\partial F}{\partial t_i}(0) = \left(\frac{d}{dt}\right)_{t=0} f(g\exp(t X_i)) = (\tilde{X}_if)(e)$$
+$$\frac{\partial F}{\partial t_i\partial t_j}(0) = \left( \frac{\partial }{\partial t_i\partial t_j} \right)_{t_i=t_j=0}f(g\exp(X_it)\exp(X_jt)) = (\tilde{X}_i\tilde{X}_jf)(e)$$
+$$\frac{\partial^2F}{\partial t_i^2}(0) = \left( \frac{d^2}{dt^2} \right)_{t=0}f(g(exp(tX_i))) = (\tilde{X}_i^2f)(e)$$
+
+All from proposition 2. Now note that being a composition of smooth functions $F$ is itself smooth. Thus we have by Taylor's theorem if $h = (h_1,..,h_k)\in \RR^k$,
+
+$$F(h) = F(0) + \sum_{1\leq i\leq n}h_i\partial_iF + \frac{1}{2}\sum_{1\leq i,j\leq n}h_ih_j\partial_i\partial_jF(0)+o(|h|^3)$$
+
+By substituting the derivatives obtained above we get
+
+$$f(exp(h_1X_1)exp(h_2X_2)..exp(h_kX_k)) = f(e) + \sum_{1\leq i\leq k}h_i \tilde{X}_if(e) + \frac{1}{2}\sum_{1\leq j\leq k}h_i^2\tilde{X}_i^2f(e)+ \sum_{1\leq i<j\leq k}h_ih_j(\tilde{X_i}\tilde{X_j}f)(e)+o(|h|^3)$$
+
+We have arrived at the following proposition.
+
+\begin{proposition}
+    Let $U$ be an open neighbourhood of $e$ in $G$ and let $f\in C^{\infty}(U,\RR^n)$. Let $X_1,..,X_k\in \ff{g}$ the for all sufficiently small $t$ we have 
+    $$f(exp(tX_1)exp(tX_2)..exp(tX_k)) = f(e) + t\sum_{1\leq i\leq k}\tilde{X}_if(e) + \frac{t^2}{2}\left( \sum_{i=1}^k \tilde{X_i}^2f(e) + 2\sum_{1\leq i<j \leq k}\tilde{X}_i\tilde{X}_jf(e)\right) + o(|h|^3)$$
+\end{proposition}
+
+\section*{Towards Cartan's theorem}
+
+The purpose of the discussion above is to derive certain formulas which are weaker versions of the Baker-Campbell-Hausdorff formula which will be sufficient to 
+prove the Cartan's theorem(In the following lectures) and for all our purposes in this course. Let $U_0,V_e$ be canonical neighbourhoods of $0\in \ff{g},e\in G$ respectively. 
+The $\exp$ map is a diffeomorphism from $U_0$ to $V_e$. Let $\exp^{-1}$ denote the inverse of $\exp$ on $V_e$. We want to set $f$ to be $exp^{-1}$ in proposition 3. Note that $exp^{-1}(e)=0$
+and by proposition 2 if $X,Y\in \ff{g}$ are distinct elements,$$\tilde{X}^n\exp^{-1}(e) = \left(\frac{d^n}{dt^n}\right)_{t=0}exp^{-1}(exp(tX)) =  \begin{cases}
+    0 & \text{if } n \geq 2\\
+    X & \text{if } n = 1\end{cases}$$
+Note that $2\tilde{X}\tilde{Y} - [\tilde{X},\tilde{Y}] = \tilde{X}\tilde{Y}+\tilde{Y}\tilde{Y} = (\tilde{X}+\tilde{Y})^2-\tilde{X}^2-\tilde{Y}^2$. So the above means
+$$2\tilde{X}\tilde{Y}f(e) - [\tilde{X},\tilde{Y}]f(e) = 0$$
+$$\implies \tilde{X}\tilde{Y}f(e) = \frac{1}{2}[\tilde{X},\tilde{Y}]f(e) = \frac{1}{2}[X,Y]$$
+With these observations proposition 3 gives us
+
+$$\exp^{-1}(\exp(tX_1)\exp(tX_2)...\exp(tX_k)) = t(\sum_{1\leq i\leq k}X_i) + \frac{t^2}{2} \sum_{1\leq i<j\leq k}[X_i,X_j]+o(t^3)$$
+
+\begin{proposition}
+    In the set up above
+    $$\exp(tX_1)\exp(tX_2)...\exp(tX_k) = \exp\left(t(\sum_{1\leq i\leq k}X_i) + \frac{t^2}{2} \sum_{1\leq i<j\leq k}[X_i,X_j]+o(t^3)\right)$$
+\end{proposition}
+
+We have the following important corollary
+
+\begin{lemma}
+    Say $X,Y\in\ff{g}$. For sufficiently small $t$ we have 
+    \begin{enumerate}
+        \item $\exp(tX)\exp(tY) = \exp(tX + tY + \frac{t^2}{2}[X,Y] + o(t^3))$
+        \item $\exp(tX)\exp(tY)\exp(-tX)\exp(-tY) = \exp(t^2[X,Y]+o(t^3))$
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Just substitute appropriately and simplify in the LHS of proposition 4.
+\end{proof}
+
+
+
+
+\end{document}

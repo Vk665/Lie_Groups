@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{tikz-cd}
+\usepackage{lindrew}
+\title{Lecture 8}
+\date{February 20, 2025}
+\author{Muna Naik}
+
+\newcommand*{\slrg}[1]{SL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\slcg}[1]{SL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\glrg}[1]{GL_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\glcg}[1]{GL_{#1 \times #1}(\mathbb{C})}
+\newcommand*{\mr}[1]{M_{#1 \times #1}(\mathbb{R})}
+\newcommand*{\org}[1]{O_{#1 \times #1}(\mathbb{R})}
+
+\begin{document}
+
+\maketitle
+
+\section{Lie subgroups}
+
+Recall the definition of lie subgroups from definition 2 of lecture 2. 
+
+\begin{definition}
+    A connected lie subgroup is called an \vocab{Analytic subgroup}.
+\end{definition}
+
+Suppose $(i,H)$ is a lie subgroup of $G$ with corresponding lie algebras being $\ff{h},\ff{g}$. Observe that the map $i:H\to G$ is a lie group homomorphism. Then lecture 3 proposition 4 
+tells us that $di_e:\ff{h}\to\ff{g}$ is a homomorphism of lie algebras. Since $i$ is an immersion $di_e$
+is injective. Thus $di_e(\ff{h})$ is a lie subalgebra of $\ff{g}$ isomorphic to $\ff{h}$. Furthermore 
+Theorem 6 of lecture 5 tells us that $\forall X\in \ff{h}$ $$exp_G(di(X)) = i(exp_H(X))$$
+Thus we can identify $\ff{h}$ with $di(\ff{h})$ and remove the subscripts without ambiguity.
+Let $X\in \ff{h}$ seen as a subalgebra of $G$. Then let $\eta_X(t):=\exp(tX)$. Clearly $\eta_X(t) = \exp(i(tX)) = i(\exp(tX))\in i(H) = H$.
+Thus $\eta_X$ is a continuous curve in $H$. Conversely suppose $X\in \ff{g}$ such that $\eta_X$ is a continuous curve in $H$. Since $H$ is a submanifold of $G$,
+$\eta_X$ is a smooth map from $\RR$ to $H$ by Theorem 9 of lecture 1. Thus $\eta_X'(0)\in T_eH = \ff{h}\implies X\in \ff{h}$.
+Thus we get the following proposition.
+
+\begin{proposition}
+    Let $G$ be a lie group and $H$ is a lie subgroup of $G$. Then $\ff{h}$ is a lie subalgebra of $\ff{g}$ and 
+    $$\ff{h} = \{X\in \ff{g}:t\mapsto exp(tX)\text{ is a continuous curve in}H\}$$
+\end{proposition}
+
+\section*{Frobenius theorem}
+    This is the tool that will let us prove Lie's theorem. Refer to Frank Warner's book for a discussion and proof of this theorem.
+\begin{definition}
+    We have a bunch of them!
+    \begin{enumerate}
+        \item  Let $M$ be a manifold and $0\leq k\leq dim(M)$ is an integer. Then a \vocab{$k-$dimensional distribution} or a differential system $S$ on $M$ is a choice of 
+        $k$ dimensional subspaces $S_q$ of $T_q(M)$ for each $q\in M$. 
+        \item Let $Y\in \mc{D}^1(M)$ be such that $Y_q\in S_q$ for each $q\in M$. then we say that \vocab{$Y\in S$} and we say that $S$ is a \vocab{smooth distribution} if $\forall p\in M$
+        There is an open neighbourhood of $p$ say $U$ such that $\exists X_1,X_2,..,X_k\in \mc{D}^1(U)$ which satisfy $S_q=span\{(X_i)_q\}$ for all $q\in U$
+        \item We say that a distribution $S$ is \vocab{involutive} if $X,Y\in S\implies [X,Y]\in S$.
+        \item Let $N$ be a submanifold of $M$. It is called an \vocab{integral submanifold} of a distribution $S$ if $T_q(N)\subseteq S_q\forall q\in N$.  
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Let $S$ be an involutive smooth distribution on a manifold $M$ and let $N$ be an integral submanifold of $S$. Suppose $P$ is a manifold and $\phi:P\to M$ is a smooth map such that $\phi(P)\subseteq N$. Then $\phi:P\to N$ is smooth.
+\end{theorem}
+
+The above will be referred ot as the smoothness theorem. What follows is the Frobenius theorem and it is very important for us.
+
+\begin{theorem}
+    Let $S$ be a smooth distribution on a manifold $M$. Then given $m\in M,\exists !$ maximal connected integral submanifold $N$ of $S$ passing through $m$ i.e, any connected integral submanifold passing through $M$ is contained inside $N$.
+\end{theorem}
+
+\section*{Lie's Theorem}
+
+\begin{proposition}
+    Let $G$ be a lie group and $\ff{g}$ be its lie algebra. Let $\ff{h}$ be a lie subalgebra of $\ff{g}$. Then there exists a unique Analytic subgroup $H$ of $G$ such that $\ff{h}$ is the lie algebra of $H$.
+\end{proposition}
+
+\begin{proof}
+    We will first find the submanifold which will serve as our subgroup. First note that if $\ff{h}=0$ then the corresponding group is trivial.
+    So assume $\ff{h}\neq 0$. Suppose $\{X_i\}_{1\leq i\leq k}$ form a bases of $\ff{h}$. Then define $S_g:=span\{(\tilde{X}_i)_g\}_{1\leq i\leq k}$. 
+    This distribution is smooth because $\{\tilde{X_i}\}_{1\leq i\leq k}$ are smooth vector fields satisfying the criteria of second point in definition 3.
+    We will show that $S$ is involutive.\\
+    Let $H$ be the maximal connected integral submanifold of $S$ passing through $e$. Note that for all $g$ we have $l_g(S)=S$. Thus if $g\in H$,$l_g(H)$ is an integral submanifold of $S$ meeting $H$ at $g$.
+    Which means by maximality of $H$ we have $l_g(H)\subseteq H$. Similarly say $x\in H$, then $l_{x^{-1}}(H)$ is an integral manifold of $H$ such that $e\in l_{x^{-1}}(H)$. By maximality of $H$ we have $l_{x^{-1}}(H)\subseteq H$.
+    Thus $H$ is an abstract subgroup as well. Thus it is a lie subgroup as $H$ is a submanifold of $G$.\\ 
+    Clearly $T_e(H)=\ff{h}$ and thus $lie(H) = \ff{h}$. Now suppose $K$ is another anaytic subgroup of $G$ such that $lie(K)=\ff{h}$. Then by Proposition 3 of lecture 6 we have that $$K=\{\exp(x_1)..\exp(x_k)|x_1,..,x_k\in \ff{h}\} = H$$
+    So $K$ and $H$ are set theoretically the same. Since the expoenntial map is a local diffeomorphism there is a neighbourhood $V$ of $0$ which is diffeomorphic to a neighbourhood of $e$ in $H$ as well as $K$. So the identity map $i:K\to H$
+    is a diffeomorphism locally near $e$. But we know that for any $x\in K$ and $U$ a neighbourhood of $x$ we have $i|_U =l_x i\circ l_{x^{-1}}(U)$ and this means $i$ is a local diffeomorphism near $x$. Thus $i$ is a diffeomorphism and $K=H$.
+\end{proof}
+
+The above proposition is called Lie's theorem. In other words,
+
+\begin{theorem}
+    Let $G$ be a lie group and $\ff{g}$ be its lie algebra. There is a one-one correspondence between lie subalgebras of $\ff{g}$ and analytic subgroups of $G$.
+\end{theorem}
+
+We have the following corollary which will be usefull later.
+
+\begin{proposition}
+    If $G$ is a lie group and $H.K$ are lie subgroups of $G$. If $H=K$ as topological groups then $H=K$ as lie groups.
+\end{proposition}
+\begin{proof}
+    We essentially need to show that there is only one smooth structure that works. Since $H=K$ as topological groups $H_0=K_0$ as topological groups as well. By the characterization of lie algebras via continuous curves in Proposition 2 we have $Lie(H_0)=Lie(K_0)$.
+    Thus by Lie's theorem $H_0=K_0$ as lie groups. But the smooth structure of lie group is determined by that on any open subset of it as it can be tranferred to other points via left translation. Thus $K=H$.
+\end{proof}
+
+\begin{remark}
+    The proof of Lie's theorem shows that analytic subgroups are integral manifolds. This fact can give an alternate proof of the above proposition. The inclusion map $i:H_0\to G_0$ is a smooth map contained in $K_0$. This means it must be a smooth map. Same argument shows its inverse is smooth
+    making the inverse map a diffeomorphism.
+\end{remark}
+
+\end{document}
